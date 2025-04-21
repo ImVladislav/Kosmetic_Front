@@ -1,23 +1,20 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-
 import { IoPersonOutline } from "react-icons/io5";
-import { PiShoppingCartFill } from "react-icons/pi"; // повний кошик
-import { PiShoppingCartLight } from "react-icons/pi"; // пустий кошик
+import { PiShoppingCartFill, PiShoppingCartLight } from "react-icons/pi";
 
 import { useMedia } from "../../utils/hooks/useMedia";
-
 import Logo from "../Logo/Logo";
 import Menu from "../Menu/Menu";
 import SearchForm from "../SearchForm/SearchForm";
-import BurgerMenu from "../Menu/BurgerMenu/BurgerMenu";
+import MobileMenu from "../Menu/MobileMenu/MobileMenu";
+import AuthModal from "../Login/AuthModal/AuthModal";
 
 import {
   BasketFullWrap,
   BasketIcon,
   BasketIconFull,
   BasketWrap,
-  ButtonMenu,
   CartQuantitySpan,
   CartQuantityWrap,
   CenterWrap,
@@ -31,9 +28,7 @@ import {
   LineWrap,
   LoginShipingThumb,
   MenuBottom,
-  MenuIcon,
   MenuWrap,
-  NameUser,
   Schedule,
   SearchIcon,
   TopWrap,
@@ -43,57 +38,43 @@ import {
   Wrap,
   WrapTop,
 } from "./header.styled";
-import MobileMenu from "../Menu/MobileMenu/MobileMenu";
 
 const Header = () => {
   const { isMobileScreen } = useMedia();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { pathname } = useLocation();
-  const isLogin = false;
-  const basket = [];
-  const handleMenuClick = () => {
-    setIsMenuOpen((state) => !state);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  const isLogin = Boolean(localStorage.getItem("token"));
+  const basket = []; // замінити на state або Redux, якщо потрібно
+
+  const handleSearchClick = () => setIsSearchOpen((prev) => !prev);
+  const handleUserIconClick = () => {
+    if (!isLogin) {
+      setShowAuthModal(true);
+    }
   };
-  const handleSearchClick = () => {
-    setIsSearchOpen((state) => !state); // Перемикаємо видимість форми пошуку
-  };
+
   return (
     <>
       {isMobileScreen ? (
         <ContainerMobile>
-          {/* top */}
-          {/* {isMenuOpen && isMobileScreen && (
-            <BurgerMenu
-              handleClick={handleMenuClick}
-              isMenuOpen={isMenuOpen}
-              setIsMenuOpen={setIsMenuOpen}
-            />
-          )} */}
-
           <TopWrap>
             <Schedule
               href="https://t.me/+Eejgotzs-ktiMTIy"
               target="_blank"
               rel="noreferrer"
-              className="sc-gxRkJE bTaJYA"
             >
               Підписуйся на наш телеграм канал
             </Schedule>
           </TopWrap>
-          {/* center */}
           <CenterWrap>
             <Logo />
           </CenterWrap>
           <CenterWrap>
-            {/* <BurgerMenu /> */}
             <MobileMenu />
-            {/* <ButtonMenu onClick={handleMenuClick}>
-              <MenuIcon />
-            </ButtonMenu> */}
             <SearchIcon onClick={handleSearchClick} />
           </CenterWrap>
-          {/* bottom */}
           <SearchForm isSearchOpen={isSearchOpen} />
         </ContainerMobile>
       ) : (
@@ -109,7 +90,6 @@ const Header = () => {
                 новинки та поповнення асортименту
               </LineLink>
             </LineWrap>
-
             <Container>
               <HeaderTop>
                 <HeaderWrap>
@@ -117,20 +97,16 @@ const Header = () => {
                     <WrapTop>
                       <Logo />
                     </WrapTop>
-
                     <WrapTop>
                       <Wrap>
                         <LoginShipingThumb>
-                          {/* search */}
                           <SearchIcon onClick={handleSearchClick} />
 
-                          {/* login */}
-                          <UserWrap>
-                            {isLogin && <UserName>userName</UserName>}
+                          <UserWrap onClick={handleUserIconClick}>
+                            {isLogin && <UserName>Користувач</UserName>}
                             <UserIcon size={25} />
                           </UserWrap>
 
-                          {/* basket */}
                           <BasketWrap>
                             {basket.length > 0 ? (
                               <BasketFullWrap>
@@ -151,6 +127,7 @@ const Header = () => {
                   </HeaderLayout>
                 </HeaderWrap>
               </HeaderTop>
+
               <MenuBottom $pathname={pathname}>
                 <MenuWrap>
                   <Menu />
@@ -160,6 +137,11 @@ const Header = () => {
           </ContainerHeader>
           <SearchForm isSearchOpen={isSearchOpen} />
         </>
+      )}
+
+      {/* === AUTH MODAL === */}
+      {!isLogin && showAuthModal && (
+        <AuthModal onClose={() => setShowAuthModal(false)} />
       )}
     </>
   );
