@@ -1,7 +1,7 @@
-import React from "react";
+// import React from "react";
 
-function Register({ onRegisterSuccess, opt }) {
-  return <div>Register</div>;
-}
+// function Register({ onRegisterSuccess, opt }) {
+//   return <div>Register</div>;
+// }
 
-export default Register;
+// export default Register;

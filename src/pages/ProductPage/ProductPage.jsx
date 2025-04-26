@@ -49,7 +49,7 @@ const ProductPage = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/products/${id}`
+          `https://kosmetic-back.onrender.com/api/products/${id}`
         );
         setLoading(false);
         setProduct(response.data);

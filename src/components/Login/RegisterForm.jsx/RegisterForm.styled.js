@@ -32,3 +32,28 @@ export const Button = styled.button`
     color: white;
   }
 `;
+
+// ✅ Додаємо стилі чекбоксів і лейблів
+
+export const CheckboxGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 15px 0;
+`;
+
+export const Label = styled.label`
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #444;
+  gap: 8px;
+  cursor: pointer;
+`;
+
+export const Checkbox = styled.input.attrs({ type: "checkbox" })`
+  accent-color: #ff9ac5;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+`;

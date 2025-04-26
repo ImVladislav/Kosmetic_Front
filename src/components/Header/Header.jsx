@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { IoPersonOutline } from "react-icons/io5";
 import { PiShoppingCartFill, PiShoppingCartLight } from "react-icons/pi";
 
 import { useMedia } from "../../utils/hooks/useMedia";
@@ -9,7 +8,7 @@ import Menu from "../Menu/Menu";
 import SearchForm from "../SearchForm/SearchForm";
 import MobileMenu from "../Menu/MobileMenu/MobileMenu";
 import AuthModal from "../Login/AuthModal/AuthModal";
-
+import User from "../Login/User/User";
 import {
   BasketFullWrap,
   BasketIcon,
@@ -32,9 +31,7 @@ import {
   Schedule,
   SearchIcon,
   TopWrap,
-  UserIcon,
   UserName,
-  UserWrap,
   Wrap,
   WrapTop,
 } from "./header.styled";
@@ -44,20 +41,88 @@ const Header = () => {
   const { pathname } = useLocation();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [cartItems, setCartItems] = useState([]);
 
-  const isLogin = Boolean(localStorage.getItem("token"));
-  const basket = []; // замінити на state або Redux, якщо потрібно
+  // Перевірка логіну
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const name = localStorage.getItem("firstName");
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    setIsLogin(!!token);
+    setUserName(name || "");
+    setCartItems(cart);
+  }, []);
+  console.log(isLogin);
+  
 
   const handleSearchClick = () => setIsSearchOpen((prev) => !prev);
   const handleUserIconClick = () => {
-    if (!isLogin) {
-      setShowAuthModal(true);
-    }
+    if (!isLogin) setShowAuthModal(true);
   };
 
   return (
     <>
-      {isMobileScreen ? (
+      {!isMobileScreen ? (
+        <ContainerHeader>
+          <LineWrap>
+            <LineLink
+              href="https://t.me/+Eejgotzs-ktiMTIy"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Підписуйся на наш телеграм канал, щоб дізнатись першим про новинки
+              та поповнення асортименту
+            </LineLink>
+          </LineWrap>
+          <Container>
+            <HeaderTop>
+              <HeaderWrap>
+                <HeaderLayout>
+                  <WrapTop>
+                    <Logo />
+                  </WrapTop>
+                  <WrapTop>
+                    <Wrap>
+                      <LoginShipingThumb>
+                        <SearchIcon onClick={handleSearchClick} />
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                          {isLogin && <UserName>{userName}</UserName>}
+                          <div onClick={handleUserIconClick}>
+                            <User />
+                          </div>
+                        </div>
+                        <div style={{ position: "relative" }}>
+                          {cartItems.length > 0 ? (
+                            <BasketFullWrap>
+                              <CartQuantityWrap>
+                                <CartQuantitySpan>{cartItems.length}</CartQuantitySpan>
+                              </CartQuantityWrap>
+                              <PiShoppingCartFill />
+                            </BasketFullWrap>
+                          ) : (
+                            <BasketIcon>
+                              <PiShoppingCartLight />
+                            </BasketIcon>
+                          )}
+                        </div>
+                      </LoginShipingThumb>
+                    </Wrap>
+                  </WrapTop>
+                </HeaderLayout>
+              </HeaderWrap>
+            </HeaderTop>
+            <MenuBottom $pathname={pathname}>
+              <MenuWrap>
+                <Menu />
+              </MenuWrap>
+              <SearchForm isSearchOpen={isSearchOpen} />
+            </MenuBottom>
+          </Container>
+        </ContainerHeader>
+      ) : (
         <ContainerMobile>
           <TopWrap>
             <Schedule
@@ -74,75 +139,35 @@ const Header = () => {
           <CenterWrap>
             <MobileMenu />
             <SearchIcon onClick={handleSearchClick} />
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              {isLogin && <UserName>{userName}</UserName>}
+              <div onClick={handleUserIconClick}>
+                <User />
+              </div>
+            </div>
+            <div style={{ position: "relative" }}>
+              {cartItems.length > 0 ? (
+                <BasketFullWrap>
+                  <CartQuantityWrap>
+                    <CartQuantitySpan>{cartItems.length}</CartQuantitySpan>
+                  </CartQuantityWrap>
+                  <PiShoppingCartFill />
+                </BasketFullWrap>
+              ) : (
+                <BasketIcon>
+                  <PiShoppingCartLight />
+                </BasketIcon>
+              )}
+            </div>
           </CenterWrap>
           <SearchForm isSearchOpen={isSearchOpen} />
         </ContainerMobile>
-      ) : (
-        <>
-          <ContainerHeader>
-            <LineWrap>
-              <LineLink
-                href="https://t.me/+Eejgotzs-ktiMTIy"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Підписуйся на наш телеграм канал, щоб дізнатись першим про
-                новинки та поповнення асортименту
-              </LineLink>
-            </LineWrap>
-            <Container>
-              <HeaderTop>
-                <HeaderWrap>
-                  <HeaderLayout>
-                    <WrapTop>
-                      <Logo />
-                    </WrapTop>
-                    <WrapTop>
-                      <Wrap>
-                        <LoginShipingThumb>
-                          <SearchIcon onClick={handleSearchClick} />
-
-                          <UserWrap onClick={handleUserIconClick}>
-                            {isLogin && <UserName>Користувач</UserName>}
-                            <UserIcon size={25} />
-                          </UserWrap>
-
-                          <BasketWrap>
-                            {basket.length > 0 ? (
-                              <BasketFullWrap>
-                                <CartQuantityWrap>
-                                  <CartQuantitySpan>
-                                    {basket.length}
-                                  </CartQuantitySpan>
-                                </CartQuantityWrap>
-                                <BasketIconFull />
-                              </BasketFullWrap>
-                            ) : (
-                              <BasketIcon />
-                            )}
-                          </BasketWrap>
-                        </LoginShipingThumb>
-                      </Wrap>
-                    </WrapTop>
-                  </HeaderLayout>
-                </HeaderWrap>
-              </HeaderTop>
-
-              <MenuBottom $pathname={pathname}>
-                <MenuWrap>
-                  <Menu />
-                </MenuWrap>
-              </MenuBottom>
-            </Container>
-          </ContainerHeader>
-          <SearchForm isSearchOpen={isSearchOpen} />
-        </>
       )}
 
-      {/* === AUTH MODAL === */}
+      {/* === AUTH MODAL ===
       {!isLogin && showAuthModal && (
         <AuthModal onClose={() => setShowAuthModal(false)} />
-      )}
+      )} */}
     </>
   );
 };

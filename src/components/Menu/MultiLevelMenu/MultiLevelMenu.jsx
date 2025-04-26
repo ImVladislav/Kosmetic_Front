@@ -105,7 +105,7 @@ const RecursiveMenu = ({ items, level = 1, parentPath = "" }) => {
   const [expandedItem, setExpandedItem] = useState(null);
 
   const brands = useSelector(selectedBrand);
-  console.log("brands", brands);
+  // console.log("brands", brands);
   const handleClickBrand = (e) => {
     const name = e.target.innerText;
     dispatch(setFilter(name.toLowerCase().trim()));

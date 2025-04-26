@@ -18,6 +18,8 @@ import BrandPage from "./pages/BrandPage/BrandPage";
 import NoProducts from "./pages/NoProducts/NoProducts";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import { useMedia } from "./utils/hooks/useMedia";
+import AdminPage from "./pages/AdminPage/AdminPage";
+import { PrivateRoute, PrivateAdminRoute } from "./modules/PrivateRoutes/PrivateRoutse";
 
 function App() {
   const { isMobileScreen } = useMedia();
@@ -171,10 +173,10 @@ function App() {
               </Suspense>
             }
           /> */}
-          {/* <Route
+          <Route
             path="ordersbyclient"
             element={<PrivateAdminRoute component={AdminPage} to="/" />}
-          /> */}
+          />
         </Route>
         {/* <Route
           path="cabinet"
