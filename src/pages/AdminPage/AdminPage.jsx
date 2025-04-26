@@ -16,6 +16,7 @@ import {
 } from "./AdminPageStyled";
 import AdminFeedbackPage from "./AdminFeedbackPage/AdminFeedbackPage";
 import {AdminEmailSenderPage} from "./AdminEmailSenderPage/AdminEmailSenderPage";
+import ProductsEditPage from "./ProductsEditPage/ProductsEditPage";
 const AdminPage = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -103,6 +104,14 @@ const AdminPage = () => {
           >
             Поштові розсилки
           </Button>
+
+          <Button
+            onClick={() => setsubPage("productsEdit")}
+            className={subPage === "productsEdit" ? "selected-button" : ""}
+          >
+            Додавання/Редагування товарів
+          </Button>
+
         </NavigateBlock>
 
         {subPage === "orders" && (
@@ -235,6 +244,8 @@ const AdminPage = () => {
         {subPage === "reviews" && <AdminFeedbackPage />}
 
         {subPage === "emailSender" && <AdminEmailSenderPage />}
+        {subPage === "productsEdit" && <ProductsEditPage />}
+        
       </AdminBlock>
     </Container>
   );
