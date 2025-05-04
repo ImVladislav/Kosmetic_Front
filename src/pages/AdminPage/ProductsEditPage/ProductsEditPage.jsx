@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import ExelUpload from "./temp.jsx";
 
 const initialProduct = {
   name: "",
@@ -130,6 +131,7 @@ const ProductsEditPage = () => {
       {mode === "add" && (
         <>
           <h2>{editId ? "Редагувати товар" : "Додати товар"}</h2>
+          <ExelUpload/>
           <form onSubmit={handleSubmit}>
           <div>
   <label>Назва</label>
