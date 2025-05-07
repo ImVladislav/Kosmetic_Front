@@ -70,44 +70,54 @@ export const AdminEmailSenderPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    if (toEmails.length === 0) {
+      toast.error("Список одержувачів порожній");
+      return;
+    }
+  
     try {
-      const requests = [];
-      for (const email of toEmails) {
-        const formData = new FormData();
-        files.forEach((file) => {
-          formData.append("file", file); // переконайтеся, що поле на сервері відповідає "files"
+      const formData = new FormData();
+  
+      files.forEach((file) => {
+        formData.append("file", file);
+      });
+  
+      formData.append("title", title);
+      formData.append("text", text);
+      formData.append("subject", subject);
+  
+      // Якщо один email – передаємо просто рядок, інакше – масив
+      if (toEmails.length === 1) {
+        formData.append("to", toEmails[0]);
+      } else {
+        toEmails.forEach((email) => {
+          formData.append("to", email); // Кожен окремо
         });
-        formData.append("title", title);
-        formData.append("text", text);
-        formData.append("to", JSON.stringify([email]));
-        formData.append("subject", subject);
-
-        requests.push(
-          axios.post(
-            "https://kosmetic-back.onrender.com/api/email/sendemail", // або змініть на свій локальний сервер
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          )
-        );
       }
-
-      await Promise.all(requests);
+  
+      await axios.post(
+        "https://kosmetic-back.onrender.com/api/email/sendemail",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+  
       toast.info("Пошта успішно відправлена");
     } catch (error) {
       console.error("Помилка:", error);
       toast.error("Сталася помилка під час відправлення пошти");
     } finally {
-      // Виконується незалежно від того, чи сталася помилка, чи відправлення успішне
       setCopiedContacts([]);
       setToEmails([]);
       setFiles([]);
       setSubject("");
     }
   };
+  
 
   useEffect(() => {
     const fetchData = async () => {

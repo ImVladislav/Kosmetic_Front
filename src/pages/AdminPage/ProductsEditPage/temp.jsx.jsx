@@ -15,9 +15,9 @@ const ExelUpload = () => {
 
     try {
 
-      await axios.post("http://localhost:3000/api/products/import", formData);
+      // await axios.post("http://localhost:3000/api/products/import", formData);
       
-    //   await axios.post("https://kosmetic-back.onrender.com/api/products/import", formData);
+      await axios.post("https://kosmetic-back.onrender.com/api/products/import", formData);
       alert("Файл успішно завантажено та оброблено!");
     } catch (error) {
       console.error("Помилка при завантаженні файлу:", error);
