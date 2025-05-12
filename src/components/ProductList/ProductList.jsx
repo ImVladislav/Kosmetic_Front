@@ -32,7 +32,7 @@ const tagOptions = [
   { id: 6, type: "тип шкіри обличчя", label: "вікова" },
 ];
 
-const ProductList = ({ param, limit = 3 }) => {
+const ProductList = ({ param, limit = 4 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -145,9 +145,17 @@ const ProductList = ({ param, limit = 3 }) => {
   };
 
   return (
-    <div style={{ display: "flex", padding: "0 30px" }}>
+    <div
+      style={{
+        display: "flex",
+        padding: "0 30px",
+        justifyContent: "space-between",
+        margin: "0 auto",
+        maxWidth: "1440px",
+      }}
+    >
       {/* фільтри тегів */}
-      <FilterWrapper>
+      {/* <FilterWrapper>
         {Object.entries(groupedTags).map(([type, tags]) => (
           <div key={type}>
             <FilterTitle>{type}</FilterTitle>
@@ -163,8 +171,8 @@ const ProductList = ({ param, limit = 3 }) => {
             ))}
           </div>
         ))}
-      </FilterWrapper>
-      {/* <ProductTag selectedTags={selectedTags} onChange={setSelectedTags} /> */}
+      </FilterWrapper> */}
+      <ProductTag selectedTags={selectedTags} onChange={setSelectedTags} />
       <div>
         {/* список продуктів */}
         <Container>
