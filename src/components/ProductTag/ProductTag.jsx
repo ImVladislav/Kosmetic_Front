@@ -8,7 +8,7 @@ const ProductTag = ({ selectedTags, onChange }) => {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const res = await axios.get("/api/filter-tags/grouped");
+        const res = await axios.get("/filter-tags/group-tag");
         setGroupedTags(res.data);
       } catch (error) {
         console.error("Failed to fetch tags:", error);
@@ -27,7 +27,7 @@ const ProductTag = ({ selectedTags, onChange }) => {
   return (
     <FilterWrapper>
       {Object.entries(groupedTags).map(([type, tags]) => (
-        <div key={type}>
+        <div key={type} style={{ display: "flex", flexDirection: "column" }}>
           <FilterTitle>{type}</FilterTitle>
           {tags.map(({ id, value }) => (
             <FilterLabel key={id}>
