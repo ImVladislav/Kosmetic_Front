@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Container, List } from "./productList.styled";
+import {
+  Container,
+  List,
+  FilterLabel,
+  FilterTitle,
+  FilterWrapper,
+} from "./productList.styled";
 import { Loader } from "../Loader/Loader";
 
 import Pagination from "../Pagination/Pagination";
@@ -14,12 +20,31 @@ import {
 import { fetchProducts } from "../../redux/products/operation";
 import { useMedia } from "../../utils/hooks/useMedia";
 import ProductItem from "../ProductItem/ProductItem";
+import ProductTag from "../ProductTag/ProductTag";
+
+const tagOptions = [
+  { id: 1, type: "Sale", label: "Sale" },
+  { id: 2, type: "Новинка", label: "Новинка" },
+  { id: 9, type: "тип шкіри обличчя", label: "для нормальної" },
+  { id: 12, type: "призначення", label: "для зволоження" },
+  { id: 32, type: "макіяж", label: "для шкіри обличчя" },
+  { id: 13, type: "призначення", label: "проти зморшок" },
+  { id: 6, type: "тип шкіри обличчя", label: "вікова" },
+];
 
 const ProductList = ({ param, limit = 3 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { screenType } = useMedia();
+
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  const groupedTags = tagOptions.reduce((acc, tag) => {
+    acc[tag.type] = acc[tag.type] || [];
+    acc[tag.type].push(tag);
+    return acc;
+  }, {});
 
   // Перевірка наявності номера сторінки в адресній строці
   const pageNumber = !isNaN(Number(location.search.split("=")[1]))
@@ -94,32 +119,78 @@ const ProductList = ({ param, limit = 3 }) => {
     navigateToPage(selected + 1);
   };
 
+  // оновлення параметрів при зміні тегів
+  useEffect(() => {
+    setParams((prev) => {
+      const updated = { ...prev, page: 1 };
+
+      if (selectedTags.length > 0) {
+        updated.filterTagIds = selectedTags.join("|");
+      } else {
+        if (prev.filterTagIds) {
+          delete updated.filterTagIds;
+        }
+      }
+
+      // уникнути зайвого ререндеру, якщо нічого не змінилось
+      const same = JSON.stringify(prev) === JSON.stringify(updated);
+      return same ? prev : updated;
+    });
+  }, [selectedTags]);
+
+  const toggleTag = (id) => {
+    setSelectedTags((prev) =>
+      prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]
+    );
+  };
+
   return (
-    <>
-      {/* список продуктів */}
-      <Container>
-        {loading ? (
-          <Loader />
-        ) : (
-          <List>
-            {items.length > 0
-              ? items.map((item) => (
-                  <ProductItem key={item.id} product={item} />
-                ))
-              : (loading || error) && <p>Товари не знайдено</p>}
-          </List>
-          //   <ProductList items={items} loading={loading} error={error} />
+    <div style={{ display: "flex", padding: "0 30px" }}>
+      {/* фільтри тегів */}
+      <FilterWrapper>
+        {Object.entries(groupedTags).map(([type, tags]) => (
+          <div key={type}>
+            <FilterTitle>{type}</FilterTitle>
+            {tags.map(({ id, label }) => (
+              <FilterLabel key={id}>
+                <input
+                  type="checkbox"
+                  checked={selectedTags.includes(id)}
+                  onChange={() => toggleTag(id)}
+                />{" "}
+                {label}
+              </FilterLabel>
+            ))}
+          </div>
+        ))}
+      </FilterWrapper>
+      {/* <ProductTag selectedTags={selectedTags} onChange={setSelectedTags} /> */}
+      <div>
+        {/* список продуктів */}
+        <Container>
+          {loading ? (
+            <Loader />
+          ) : (
+            <List>
+              {items.length > 0
+                ? items.map((item) => (
+                    <ProductItem key={item.id} product={item} />
+                  ))
+                : (loading || error) && <p>Товари не знайдено</p>}
+            </List>
+            //   <ProductList items={items} loading={loading} error={error} />
+          )}
+        </Container>
+        {/* пагінація */}
+        {!loading && pagination.totalPages > 1 && (
+          <Pagination
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            onPageChange={handlePageChange}
+          />
         )}
-      </Container>
-      {/* пагінація */}
-      {!loading && pagination.totalPages > 1 && (
-        <Pagination
-          currentPage={pagination.currentPage}
-          totalPages={pagination.totalPages}
-          onPageChange={handlePageChange}
-        />
-      )}
-    </>
+      </div>
+    </div>
   );
 };
 

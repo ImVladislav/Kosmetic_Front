@@ -1,7 +1,7 @@
 import React from "react";
 import Category from "../../components/Category/Category";
 import { useLocation } from "react-router-dom";
-
+import ProductsTag from "../../components/ProductTag/ProductTag";
 const CategoryPage = () => {
   // const dispatch = useDispatch();
   // const navigate = useNavigate();
