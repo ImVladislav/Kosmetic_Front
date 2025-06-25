@@ -9,14 +9,23 @@ import eyeCreamImage from "../../assets/images/category/eyeCream.png";
 import faceMasksImage from "../../assets/images/category/faceMasks.png";
 import handCreamImage from "../../assets/images/category/handCream.png";
 
+// import {
+//   Container,
+//   Item,
+//   LinkStyle,
+//   List,
+//   Name,
+//   Title,
+//   WrapImg,
+// } from "./categoryList.styled";
+
 import {
-  Container,
-  Item,
-  LinkStyle,
-  List,
-  Name,
-  Title,
-  WrapImg,
+  CategoriesWrapper,
+  CategoriesTitle,
+  CategoriesGrid,
+  CategoryCard,
+  CategoryImage,
+  CategoryName,
 } from "./categoryList.styled";
 
 import { setFilter } from "../../redux/filter/slice";
@@ -80,6 +89,40 @@ const categoryData = [
   },
 ];
 
+const categories = [
+  {
+    image: require("../../assets/images/category/1.png"),
+    name: "Туш для вій",
+  },
+  {
+    image: require("../../assets/images/category/2.png"),
+    name: "Догляд для волосся",
+  },
+  {
+    image: require("../../assets/images/category/3.png"),
+    name: "Крем для обличчя",
+  },
+  {
+    image: require("../../assets/images/category/4.png"),
+    name: "Зволоження",
+  },
+  {
+    image: require("../../assets/images/category/5.png"),
+    name: "Сироватки",
+  },
+  {
+    image: require("../../assets/images/category/6.png"),
+    name: "Маски для обличчя",
+  },
+  {
+    image: require("../../assets/images/category/7.png"),
+    name: "Крем для очей",
+  },
+  {
+    image: require("../../assets/images/category/8.png"),
+    name: "Крем для рук",
+  },
+];
 const CategoryList = () => {
   const dispatch = useDispatch();
 
@@ -91,21 +134,32 @@ const CategoryList = () => {
     });
   };
   return (
-    <Container>
-      <Title>категорії товарів</Title>
-      <List>
-        {categoryData.map((item) => (
-          <Item key={item.id}>
-            <LinkStyle to={item.to} onClick={() => handleClick(item.text)}>
-              <WrapImg>
-                <img src={item.srcImage} alt={item.name} />
-              </WrapImg>
-              <Name>{item.name}</Name>
-            </LinkStyle>
-          </Item>
+    // <Container>
+    //   <Title>категорії товарів</Title>
+    //   <List>
+    //     {categoryData.map((item) => (
+    //       <Item key={item.id}>
+    //         <LinkStyle to={item.to} onClick={() => handleClick(item.text)}>
+    //           <WrapImg>
+    //             <img src={item.srcImage} alt={item.name} />
+    //           </WrapImg>
+    //           <Name>{item.name}</Name>
+    //         </LinkStyle>
+    //       </Item>
+    //     ))}
+    //   </List>
+    // </Container>
+    <CategoriesWrapper>
+      <CategoriesTitle>Категорії</CategoriesTitle>
+      <CategoriesGrid>
+        {categories.map((cat, idx) => (
+          <CategoryCard key={idx} onClick={() => handleClick(cat.name)}>
+            <CategoryImage src={cat.image} alt={cat.name} />
+            <CategoryName>{cat.name}</CategoryName>
+          </CategoryCard>
         ))}
-      </List>
-    </Container>
+      </CategoriesGrid>
+    </CategoriesWrapper>
   );
 };
 

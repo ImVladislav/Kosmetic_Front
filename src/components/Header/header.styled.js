@@ -10,7 +10,7 @@ import { PiShoppingCartLight } from "react-icons/pi"; // пустий коши
 
 export const ContainerHeader = styled.header`
   position: relative;
-  z-index: 1;
+  z-index: 200;
   background: ${(p) => p.theme.colors.white};
 
   max-width: 767px;
@@ -306,7 +306,7 @@ export const LineWrap = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
-  z-index: 1;
+  z-index: 10;
 `;
 
 export const LineLink = styled.a`
@@ -330,5 +330,123 @@ export const LineLink = styled.a`
   }
   @media screen and (min-width: 1280px) {
     font-size: 14px;
+  }
+`;
+
+// _______________________v2____________________
+
+export const HeaderWrapper = styled.header`
+  background: ${(p) => p.theme.colors.white};
+  box-shadow: 0px 4px 15px rgba(152.68, 152.68, 152.68, 0.1);
+  padding: 10px;
+  /* background: #fff;
+  box-shadow: 0px 4px 15px 0px rgba(153, 153, 153, 0.1);
+  padding: 10px 0; */
+  width: 100%;
+  height: 100%;
+  /* justify-content: space-between;
+  align-items: center;
+  display: inline-flex; */
+  z-index: 10;
+  @media screen and (min-width: 768px) {
+    padding: 0;
+  }
+`;
+
+export const HeaderInner = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* max-width: 375px; */
+  margin: 0 auto;
+  gap: 10px;
+  /* padding: 0 16px; */
+  @media screen and (min-width: 768px) {
+    justify-content: space-evenly;
+  }
+  @media screen and (min-width: 1024px) {
+    /* justify-content: space-evenly; */
+    padding: 0 215px;
+  }
+`;
+
+export const Logo = styled.a`
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  gap: 2px;
+  text-decoration: none;
+
+  @media screen and (min-width: 768px) {
+    gap: 6px;
+  }
+`;
+
+export const LogoText = styled.span`
+  font-family: Montserrat;
+  color: ${({ color }) => color || "#8F49A3"};
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 36.53px;
+  word-wrap: break-word;
+  @media screen and (min-width: 768px) {
+    font-size: 36px;
+    line-height: 50.4px;
+  }
+`;
+
+export const IconsWrapper = styled.div`
+  display: flex;
+  gap: 0px;
+  @media screen and (min-width: 768px) {
+    gap: 46px;
+  }
+`;
+
+export const IconButton = styled.button`
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  cursor: pointer;
+  color: ${(p) => p.theme.colors.primary_text};
+  transition: color 0.3s ease;
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    fill: ${(p) => p.theme.colors.primary_text};
+    transition: fill 0.3s ease;
+  }
+  .basket {
+    width: 24px;
+    height: 24px;
+
+    transition: fill 0.3s ease;
+  }
+
+  &:hover {
+    color: ${(p) => p.theme.colors.accent_pink};
+  }
+
+  &:hover .icon {
+    color: ${(p) => p.theme.colors.accent_pink};
+
+    fill: ${(p) => p.theme.colors.accent_pink};
+  }
+
+  @media screen and (min-width: 768px) {
+    padding: 30px 0;
+    font-size: 14px;
+    font-family: Montserrat;
+    font-weight: 400;
+    line-height: 19.6px;
+
+    .icon {
+      width: 18px;
+      height: 18px;
+    }
   }
 `;

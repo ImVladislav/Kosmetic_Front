@@ -2,6 +2,18 @@ export const theme = {
   colors: {
     white: "#ffffff",
     black: "#000000",
+
+    primary_text: "#000e55",
+    button_open: "#FFE8F5",
+    button_buy: "#E667A4",
+    button_buy_hover: "#da469a",
+    accent_pink: "#DA469A",
+    accent_green: "#007504",
+    accent_red: "#b90003",
+
+    neutural_ligth_gray: "#f6f6f6",
+    accentBlue: "#d6ecff",
+
     textColor: "#504056", //
     accentColor: "#FF96CF", //
     hoverAccentColor: "#ff75c0",

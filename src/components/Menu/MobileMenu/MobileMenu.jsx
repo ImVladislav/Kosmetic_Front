@@ -204,8 +204,8 @@ const RecursiveMobileMenu = ({ items, parentPath = "", toggleMenu }) => {
   );
 };
 
-const MobileMenu = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const MobileMenu = ({ isOpen, setIsOpen }) => {
+  // const [isOpen, setIsOpen] = useState(false);
   const [showCategory, setShowCategory] = useState(false);
   const [showBrands, setShowBrands] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState(null);
@@ -260,9 +260,9 @@ const MobileMenu = () => {
 
   return (
     <BurgerWrapper>
-      <BurgerIcon onClick={toggleMenu}>
+      {/* <BurgerIcon onClick={toggleMenu}>
         <AiOutlineMenu />
-      </BurgerIcon>
+      </BurgerIcon> */}
 
       <MobileMenuWrapper isOpen={isOpen}>
         <CloseBtn onClick={toggleMenu}>
