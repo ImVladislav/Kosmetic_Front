@@ -3,14 +3,14 @@ import { MenuWrapper, MenuItem, MenuList } from "./menu.styled";
 import MultiLevelMenu from "./MultiLevelMenu/MultiLevelMenu";
 
 export const menu = [
-  { text: "ОБЛИЧЧЯ", to: "/category/facial" },
-  { text: "ВОЛОССЯ", to: "/category/hairCare" },
-  { text: "МАКІЯЖ", to: "/category/makeup" },
-  { text: "ТІЛО", to: "/category/bodyCare" },
-  { text: "НАБОРИ & ПОДАРУНКИ", to: "/category/folds" },
-  { text: "SALE", to: "/discount", highlight: true },
+  { text: "ОБЛИЧЧЯ", to: "/katehoriji" },
+  { text: "ВОЛОССЯ", to: "/katehoriji/hairCare" },
+  { text: "МАКІЯЖ", to: "/katehoriji/makeup" },
+  { text: "ТІЛО", to: "/katehoriji/bodyCare" },
+  { text: "НАБОРИ & ПОДАРУНКИ", to: "/katehoriji/folds" },
+  { text: "SALE", to: "/aktsiji", highlight: true },
   { text: "БРЕНДИ", to: "/brands" },
-  { text: "ПРО НАС", to: "/wholesaleProgram" },
+  { text: "ПРО НАС", to: "/kliientam" },
 ];
 
 export const menuData = [
