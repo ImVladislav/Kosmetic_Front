@@ -260,10 +260,6 @@ const MobileMenu = ({ isOpen, setIsOpen }) => {
 
   return (
     <BurgerWrapper>
-      {/* <BurgerIcon onClick={toggleMenu}>
-        <AiOutlineMenu />
-      </BurgerIcon> */}
-
       <MobileMenuWrapper isOpen={isOpen}>
         <CloseBtn onClick={toggleMenu}>
           <AiOutlineClose />
