@@ -196,13 +196,13 @@ const Header = () => {
           <IconsWrapper>
             {/* Бургер-меню */}
             {isMobileScreen && (
-              <IconButton onClick={() => setIsMobileMenuOpen((prev) => !prev)}>
+              <IconButton onClick={() => setIsMobileMenuOpen(true)}>
                 <MenuIcon className="icon" width={44} height={44} />
               </IconButton>
             )}
 
             {/* Search */}
-            <IconButton onClick={() => setIsMobileMenuOpen(true)}>
+            <IconButton onClick={() => setIsSearchOpen((prev) => !prev)}>
               <SearchIcon className="icon" />
               {!isMobileScreen && "ПОШУК"}
             </IconButton>
@@ -226,11 +226,7 @@ const Header = () => {
               {!isMobileScreen && (isLogin ? "ВИХІД" : "ВХІД")}
             </IconButton>
 
-            <IconButton
-              onClick={() => setIsModalOpen(true)}
-              isModalOpen={isModalOpen}
-              setIsModalOpen={setIsModalOpen}
-            >
+            <IconButton onClick={() => setIsModalOpen(true)}>
               <BasketIcon className="basket" />
               {!isMobileScreen && "КОШИК"}
             </IconButton>

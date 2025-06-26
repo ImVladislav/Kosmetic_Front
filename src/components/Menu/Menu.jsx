@@ -3,14 +3,14 @@ import { MenuWrapper, MenuItem, MenuList } from "./menu.styled";
 import MultiLevelMenu from "./MultiLevelMenu/MultiLevelMenu";
 
 export const menuData = [
-  { label: "ОБЛИЧЧЯ", href: "/" },
-  { label: "ВОЛОССЯ", href: "/" },
-  { label: "МАКІЯЖ", href: "/" },
-  { label: "ТІЛО", href: "/" },
-  { label: "НАБОРИ & ПОДАРУНКИ", href: "/" },
-  { label: "SALE", href: "#", highlight: true },
-  { label: "БРЕНДИ", href: "/brands" },
-  { label: "ПРО НАС", href: "/" },
+  { text: "ОБЛИЧЧЯ", to: "/category/facial" },
+  { text: "ВОЛОССЯ", to: "/category/hairCare" },
+  { text: "МАКІЯЖ", to: "/category/makeup" },
+  { text: "ТІЛО", to: "/category/bodyCare" },
+  { text: "НАБОРИ & ПОДАРУНКИ", to: "/category/folds" },
+  { text: "SALE", to: "/discount", highlight: true },
+  { text: "БРЕНДИ", to: "/brands" },
+  { text: "ПРО НАС", to: "/wholesaleProgram" },
 ];
 
 const Menu = () => {
@@ -21,8 +21,8 @@ const Menu = () => {
     <MenuWrapper>
       <MenuList>
         {menuData.map((item, idx) => (
-          <MenuItem key={idx} to={item.href} $highlight={item.highlight}>
-            {item.label}
+          <MenuItem key={item.to} to={item.to} $highlight={item.highlight}>
+            {item.text}
           </MenuItem>
         ))}
       </MenuList>
